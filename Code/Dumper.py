@@ -1,7 +1,7 @@
 import sys
 
+
 def get_type(line):
-    url_type = "unknown"
     if "apps/details?id=" in line:
         url_type = "app"
     else:
@@ -13,12 +13,14 @@ def get_type(line):
     return url_type
     pass
 
+
 def write_list(filename, lines):
     file = open(filename, "w")
     for line in lines:
         file.write(line + "\n")
     print("Save to file '" + filename + "' (" + str(len(lines)) + " lines)")
     file.close()
+
 
 def make():
     file_name = sys.argv[1]
@@ -54,4 +56,6 @@ def make():
     write_list("apps.csv", apps)
     write_list("developers.csv", developers)
     write_list("pages.csv", pages)
+
+
 make()

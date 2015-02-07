@@ -1,8 +1,10 @@
 USE `gparser`;
 
-DROP TABLE app_info;
-DROP TABLE app;
-DROP TABLE task;
+DROP TABLE `app_info`;
+DROP TABLE `app`;
+DROP TABLE `developer`;
+DROP TABLE `page`;
+DROP TABLE `task`;
 DROP TABLE `task_type`;
 
 # Helpers:
@@ -31,7 +33,7 @@ CREATE TABLE `task` (
 # Data tables:
 CREATE TABLE `app` (
   `app_id` INT NOT NULL AUTO_INCREMENT,
-  `bundle` VARCHAR(255) NOT NULL,
+  `bundle` VARCHAR(255) NOT NULL UNIQUE,
   `alive` TINYINT(1),
   PRIMARY KEY (`app_id`));
 
@@ -48,3 +50,13 @@ CREATE TABLE `app_info` (
     REFERENCES `app` (`app_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+    
+CREATE TABLE `developer` (
+  `developer_id` INT NOT NULL AUTO_INCREMENT,
+  `dev_page_id` VARCHAR(255) NOT NULL UNIQUE,
+  PRIMARY KEY (`developer_id`));
+  
+CREATE TABLE `page` (
+  `page_id` INT NOT NULL AUTO_INCREMENT,
+  `page_url` VARCHAR(255) NOT NULL UNIQUE,
+  PRIMARY KEY (`page_id`));
