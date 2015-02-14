@@ -44,8 +44,17 @@ class DB:
             Log.log_ex("Test connection")
             return False
 
+    def select_page(self, id):
+        try:
+            self._cursor.execute("SELECT * FROM page WHERE page_id = " + pymysql.escape_string(str(id)))
+            result = None
+            for val in self._cursor:
+                result = val
+            return result
+        except:
+            Log.log_ex("select page")
+
     def insert_app(self, bundle):
-        Log.log("Insert app: " + bundle)
         try:
             self._cursor.execute("INSERT INTO app(bundle) VALUES(\"" + pymysql.escape_string(bundle) + "\")")
             Log.log("Insert app complete.")
