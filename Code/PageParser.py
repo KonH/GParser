@@ -1,6 +1,7 @@
 from Database import DB
 from Logger import Log
 from Parser import Parser
+from Common import Common
 
 
 class PageParser:
@@ -8,11 +9,22 @@ class PageParser:
     def __init__(self, _db):
         self.db = _db
 
-    def process(self):
-        page = self.db.select_page(24)
-        current_link = page[1]
+    def get_pages(self):
+        return self.db.get_pages()
+
+    def process_all(self):
+        pages = self.get_pages()
+        Log.log("Process " + str(len(pages)) + " pages.")
+        new_links = 0
+        for page in pages:
+            new_links += self.process(page[1])
+            Common.Wait()
+        Log.log("Process complete (" + str(new_links) + " new links)")
+
+    def process(self, url):
+        current_link = url
         Log.log("Current link is '" + current_link + "'")
-        links = Parser.get_links_from_page(current_link)
+        links = Parser.get_app_links_from_page(current_link)
         if links != -1:
             new_links = []
             for link in links:
@@ -21,9 +33,11 @@ class PageParser:
                     new_links.append(link)
             Log.log("Found " + str(len(links)) + " links")
             Log.log("New links: " + str(len(new_links)) + " " + str(new_links))
+            return len(new_links)
         else:
             Log.log("Page not found!")
+            return 0
 
 db = DB()
 pp = PageParser(db)
-pp.process()
+pp.process_all()

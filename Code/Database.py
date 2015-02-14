@@ -44,6 +44,17 @@ class DB:
             Log.log_ex("Test connection")
             return False
 
+    def get_pages(self):
+        try:
+            self._cursor.execute("SELECT * FROM page")
+            result = []
+            for val in self._cursor:
+                result.append(val)
+            return result
+        except:
+            Log.log_ex("get pages")
+            return []
+
     def select_page(self, id):
         try:
             self._cursor.execute("SELECT * FROM page WHERE page_id = " + pymysql.escape_string(str(id)))
@@ -53,6 +64,28 @@ class DB:
             return result
         except:
             Log.log_ex("select page")
+
+
+    def get_developers(self):
+        try:
+            self._cursor.execute("SELECT * FROM developer")
+            result = []
+            for val in self._cursor:
+                result.append(val)
+            return result
+        except:
+            Log.log_ex("get developers")
+            return []
+
+    def select_developer(self, id):
+        try:
+            self._cursor.execute("SELECT * FROM developer WHERE developer_id = " + pymysql.escape_string(str(id)))
+            result = None
+            for val in self._cursor:
+                result = val
+            return result
+        except:
+            Log.log_ex("select developer")
 
     def insert_app(self, bundle):
         try:

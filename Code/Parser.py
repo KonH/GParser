@@ -5,12 +5,12 @@ import re
 
 class Parser:
     @staticmethod
-    def get_links_from_page(url):
+    def get_app_links_from_page(url):
         page_content = Parser.get_page_content(url)
         if page_content == -1:
             return -1
         else:
-            return Parser.get_links(page_content)
+            return Parser.get_app_links(page_content)
 
     @staticmethod
     def get_page_content(url):
@@ -27,7 +27,7 @@ class Parser:
         return None
 
     @staticmethod
-    def get_links(page_content):
+    def get_app_links(page_content):
         try:
             p = re.compile('\"(/store/apps/details\?id=[a-zA-Z.]*)\"|\"(/store/apps/developer\?id=[a-zA-Z.]*)\"')
             result = re.findall(p, page_content)
