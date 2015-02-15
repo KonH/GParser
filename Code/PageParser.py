@@ -15,10 +15,15 @@ class PageParser:
     def process_all(self):
         pages = self.get_pages()
         Log.log("Process " + str(len(pages)) + " pages.")
+        count = len(pages)
+        index = 0
         new_links = 0
         for page in pages:
+            percent = round((index / count) * 100, 2)
+            Log.log("Process progress: " + str(percent) + "% " + str(index) + "/" + str(count))
             new_links += self.process(page[1])
             Common.Wait()
+            index += 1
         Log.log("Process complete (" + str(new_links) + " new links)")
 
     def process(self, url):
